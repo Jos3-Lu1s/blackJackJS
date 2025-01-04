@@ -1,6 +1,13 @@
 .carta{
-    position: relative;
+    /* position: relative; */
     width: 150px;
-    left: 100px;
+    /* left: 100px; */
+}
+
+.carta:not(:first-of-type){
     margin-left: -75px;
+}
+
+body{
+    background-color: #89a782;
 }
