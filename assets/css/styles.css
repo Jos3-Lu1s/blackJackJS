@@ -11,3 +11,7 @@
 body{
     background-color: #89a782;
 }
+
+#jugadorCartas, #computadoraCartas{
+    height: 200px;
+}
