@@ -1,6 +1,15 @@
+body{
+    background-color: #89a782;
+}
+
+a{
+    font-family: serif;
+}
+
 .carta{
     /* position: relative; */
-    width: 150px;
+    width: auto; 
+    max-height: 100%; 
     /* left: 100px; */
 }
 
@@ -8,10 +17,14 @@
     margin-left: -75px;
 }
 
-body{
-    background-color: #89a782;
+#jugadorCartas, #computadoraCartas{
+    height: 250px;
 }
 
-#jugadorCartas, #computadoraCartas{
-    height: 200px;
+.divCartas {
+    overflow: auto;
+}
+
+.divCartas::-webkit-scrollbar {
+    display: none;
 }

@@ -2,7 +2,7 @@
 
 //Funcion anonima auto invocada
 const moduloBlackJack = (() => {
-    'use strict'
+    'use strict';
 
     /**
      * DOM referencias
@@ -17,6 +17,27 @@ const moduloBlackJack = (() => {
     const figuras = ["C", "S", "D", "H"], especial = ["A", "J", "K", "Q"];
     // let puntajeJugador = 0, puntajeComputadora = 0;
     let puntajeJugadores = [];
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+    });
+
+    const showMsj = (toast, icon, iconcolor, title, textcolor, bgcolor) => {
+        toast.fire({
+            icon: icon,
+            iconColor: iconcolor,
+            title: title,
+            color: textcolor,
+            background: bgcolor,
+        })
+    }
 
     /**
      * Comenzar juego
@@ -55,7 +76,7 @@ const moduloBlackJack = (() => {
     /**
      * getCard: Obtener una carta del deck
      */
-    const getCard = () => deck.length === 0 ? console.error("No hay mas cartas en el deck") : deck.pop();
+    const getCard = () => deck.length === 0 ? showMsj(Toast, "error", "white", "NO HAY MAS CARTAS EN EL DECK","white","#f27474") : deck.pop();
 
 
     /**
@@ -66,9 +87,12 @@ const moduloBlackJack = (() => {
     const crearCartaImg = (Nombrecarta, turno) => {
         const cartaImg = document.createElement("img");
         cartaImg.src = `assets/cartas/${Nombrecarta}.png`;
-        cartaImg.classList.add("carta");
+        cartaImg.classList.add("carta", "p-0", "animate__animated", "animate__flipInY", "animate__faster");
         cartaImg.alt = "carta";
         divCartasJugador[turno].append(cartaImg);
+        cartaImg.addEventListener("animationend", () => {
+            cartaImg.classList.remove("animate__animated", "animate__flipInY", "animate__faster");
+        });
     }
 
     /**
@@ -82,13 +106,15 @@ const moduloBlackJack = (() => {
 
     const determinarGanador = (puntajeJugador, puntajeComputadora) => {
         if (puntajeComputadora === puntajeJugador) {
-            console.log("NADIE GANA");
+            showMsj(Toast, "warning", "white", "NADIE GANA","white","#f8bb86");
         } else if (puntajeJugador > 21) {
-            console.log("Computadora gana");
+            showMsj(Toast, "info", "white", "COMPUTADORA GANA","white","#3fc3ee");
         } else if (puntajeComputadora > 21) {
-            console.log("JugadorGana");
+            showMsj(Toast, "success", "white", "JUGADOR GANA","white","#a5dc86");
         } else if (puntajeComputadora === 21 && puntajeJugador != 21) {
-            console.log("Computadora gana");
+            showMsj(Toast, "info", "white", "COMPUTADORA GANA","white","#3fc3ee");
+        } else if (puntajeComputadora > puntajeJugador && puntajeComputadora < 21) {
+            showMsj(Toast, "info", "white", "COMPUTADORA GANA","white","#3fc3ee");
         }
     }
 
@@ -143,6 +169,6 @@ const moduloBlackJack = (() => {
         }
     });
     return {
-        nuevoJuego : inicializarJuego
+        nuevoJuego: inicializarJuego
     };
 })();
